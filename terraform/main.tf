@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "bouddha-tf-state-angular"
+    bucket         = "bouddha-tf-state-angular-1"
     key            = "fuel-calculator/terraform.tfstate"
     region         = "eu-west-1"
     dynamodb_table = "terraform-state-lock-angular"
