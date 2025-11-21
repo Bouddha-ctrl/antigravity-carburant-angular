@@ -57,9 +57,10 @@ export class ChartComponent implements OnInit, OnDestroy {
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
-        // Scales
+        // Scales - ensure full date range is shown
+        const dateExtent = d3.extent(data, d => d.timestamp) as [Date, Date];
         const x = d3.scaleTime()
-            .domain(d3.extent(data, d => d.timestamp) as [Date, Date])
+            .domain(dateExtent)
             .range([0, width]);
 
         const y = d3.scaleLinear()
@@ -86,14 +87,14 @@ export class ChartComponent implements OnInit, OnDestroy {
             .y(d => y(d.price))
             .curve(d3.curveMonotoneX);
 
-        // Add X Axis with day format
+        // Add X Axis with date format showing day and month
         svg.append('g')
             .attr('transform', `translate(0,${height})`)
             .call(d3.axisBottom(x)
-                .ticks(10)
+                .ticks(d3.timeDay.every(2)) // Show every 2 days
                 .tickFormat((d) => {
                     const date = d as Date;
-                    return date.getDate().toString();
+                    return `${date.getDate()}/${date.getMonth() + 1}`;
                 }));
 
         // Add Y Axis

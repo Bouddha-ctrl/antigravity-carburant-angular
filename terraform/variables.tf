@@ -12,8 +12,3 @@ variable "project_name" {
   description = "Project name"
   type        = string
 }
-
-variable "enable_cloudfront" {
-  description = "Enable CloudFront CDN"
-  type        = bool
-}
