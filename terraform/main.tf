@@ -56,3 +56,14 @@ module "website_bucket" {
     Project     = var.project_name
   }
 }
+
+# CloudFront CDN
+module "cloudfront" {
+  source = "./modules/cloudfront"
+
+  project_name                = var.project_name
+  environment                 = var.environment
+  bucket_id                   = module.website_bucket.bucket_id
+  bucket_arn                  = module.website_bucket.bucket_arn
+  bucket_regional_domain_name = module.website_bucket.bucket_regional_domain_name
+}
